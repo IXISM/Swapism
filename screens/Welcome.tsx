@@ -1,38 +1,170 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import colors from '../theme';
+import { View, Text, TouchableOpacity, StyleSheet, Image, SafeAreaView, StatusBar } from 'react-native';
+
 
 const Welcome: React.FC<{ onNavigate: (route: string) => void; onGuest: () => void }> = ({ onNavigate, onGuest }) => {
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}> 
-      <Text style={styles.title}>Welcome</Text>
-      <Text style={styles.subtitle}>Find, swap and share your style.</Text>
+    <View style={styles.mainContainer}>
+      <StatusBar barStyle="dark-content" />
+      
+      {/* Main Background*/}
+      <SafeAreaView style={styles.mainBackground}>
 
-      <TouchableOpacity style={styles.primary} onPress={() => onNavigate('Login')}>
-        <Text style={styles.primaryText}>Sign In</Text>
-      </TouchableOpacity>
+        {/* Logo */}
+        <View style={styles.logoContainer}>
+          <Image 
+            source={require('../assets/transparentLogo.png')}
+            style={styles.transparentLogo} 
+            resizeMode="contain"
+          />
+        </View>
 
-      <TouchableOpacity style={styles.secondary} onPress={() => onNavigate('Register')}>
-        <Text style={styles.secondaryText}>Create Account</Text>
-      </TouchableOpacity>
+        {/* Illustration */}
+        <View style={styles.illustrationContainer}>
+          <Image 
+            source={require('../assets/welcomeIllustration.png')}
+            style={styles.welcomeIllustration} 
+            resizeMode="contain" 
+          />
+        </View>
+      </SafeAreaView>
 
-      <TouchableOpacity style={styles.guest} onPress={onGuest}>
-        <Text style={styles.guestText}>Continue as Guest</Text>
-      </TouchableOpacity>
+      {/* White Card */}
+      <View style={styles.whiteCard}>
+        
+        {/* Tagline */}
+        <Text style={styles.tagline}>Discover, swap, and try clothes virtually</Text>
+        
+        {/* Welcome Title */}
+        <Text style={styles.title}>Welcome!</Text>
+
+        {/* Login Button */}
+        <TouchableOpacity style={styles.loginButton} onPress={() => onNavigate('Login')}>
+          <Text style={styles.loginButtonText}>Login</Text>
+        </TouchableOpacity>
+
+        {/* Sign Up Button */}
+        <TouchableOpacity style={styles.signUpButton} onPress={() => onNavigate('Register')}>
+          <Text style={styles.signUpButtonText}>Sign Up</Text>
+        </TouchableOpacity>
+
+        {/* Skip Link */}
+        <TouchableOpacity onPress={onGuest}>
+          <Text style={styles.guestText}>Skip for now</Text>
+        </TouchableOpacity>
+
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20 },
-  title: { fontSize: 28, fontWeight: '800', color: colors.text, marginBottom: 6 },
-  subtitle: { color: colors.text, marginBottom: 24 },
-  primary: { backgroundColor: colors.primary, paddingVertical: 14, paddingHorizontal: 36, borderRadius: 10, marginVertical: 6 },
-  primaryText: { color: colors.surface, fontWeight: '700' },
-  secondary: { backgroundColor: colors.accent, paddingVertical: 12, paddingHorizontal: 28, borderRadius: 10, marginVertical: 6 },
-  secondaryText: { color: colors.text, fontWeight: '700' },
-  guest: { marginTop: 12 },
-  guestText: { color: colors.text, textDecorationLine: 'underline' },
+  //Main Background
+  mainContainer: {
+    flex: 1,
+    backgroundColor: '#C1D9B7',
+  },
+  mainBackground: {
+    flex: 2.0, 
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 20,
+  },
+  // Logo Styles
+  logoContainer: {
+    height: 80,
+  },
+  transparentLogo: {
+    width: 200,
+    height: 180,
+    zIndex: 10, // Ensure it stays above other elements
+  },
+  // Illustration Styles
+  illustrationContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  welcomeIllustration: {
+    width: 420,
+    height: 450,
+    objectFit: "contain",
+  },
+  
+  // White Card Styles
+  whiteCard: {
+    backgroundColor: '#F5F3E4', // Cream/Off-white background
+    borderTopLeftRadius: 35,
+    borderTopRightRadius: 35,
+    paddingVertical: 30,
+    paddingHorizontal: 20,
+    marginHorizontal: 15,
+    alignItems: 'center',
+  },
+  tagline: {
+    fontSize: 14,
+    fontFamily: 'serif',
+    color: '#666',
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: 36,
+    fontFamily: 'serif', 
+    fontWeight: 'bold',
+    color: '#1A1A1A',
+    marginTop: 40,
+    marginBottom: 20,
+    textShadowColor: 'rgba(0, 0, 0, 0.5)', 
+    textShadowOffset: { width: 0, height: 2 }, 
+    textShadowRadius: 10, // Blur amount
+  },
+  // Login Button
+  loginButton: {
+    backgroundColor: '#000000ff', 
+    width: '90%',
+    paddingVertical: 16,
+    borderRadius: 30,
+    alignItems: 'center',
+    marginBottom: 15,
+    // Button Shadow
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 }, // For IOS shadow
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 6, // For Android shadow
+  },
+  loginButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontFamily: 'serif',
+    fontWeight: '700',
+  },
+
+  // Sign Up Button
+  signUpButton: {
+    backgroundColor: 'transparent',
+    borderWidth: 1.5,
+    borderColor: '#000000ff',
+    width: '90%',
+    paddingVertical: 15,
+    borderRadius: 30,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  signUpButtonText: {
+    color: '#1A1A1A',
+    fontSize: 16,
+    fontFamily: 'serif',
+    fontWeight: '700',
+  },
+
+  // Guest Link
+  guestText: {
+    fontFamily: 'serif',
+    color: '#E57373',
+    textDecorationLine: 'underline',
+    fontSize: 14,
+  },
 });
 
 export default Welcome;
